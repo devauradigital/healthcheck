@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EarlyAware+ | Symptom Checker</title>
+    <title>HealthChecker | Symptom Checker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: #1f2937;
             scroll-behavior: smooth;
         }
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Outfit', sans-serif;
         }
         .primary-color {
             color: #008080;
@@ -24,14 +24,28 @@
         .primary-bg {
             background-color: #008080;
         }
+        .secondary-color {
+            color: #0066cc;
+        }
         .secondary-bg {
             background-color: #0066cc;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.2);
         }
         .transition-all {
             transition: all 0.3s ease;
         }
         .scale-hover:hover {
             transform: scale(1.05);
+        }
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
         }
         .fade-in {
             opacity: 0;
@@ -41,6 +55,18 @@
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
         }
         .loading-spinner {
             border: 4px solid #f3f3f3;
@@ -72,31 +98,47 @@
             border-color: #008080;
             color: #008080;
         }
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="sticky-header py-4">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <a href="index1.html" class="text-teal-600 hover:text-teal-800 font-medium transition-all flex items-center" aria-label="Back to home">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Home
-            </a>
-            <div class="flex items-center justify-center flex-grow">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center">
                 <i class="fas fa-heartbeat text-3xl primary-color mr-2"></i>
-                <h1 class="text-3xl font-bold primary-color">EarlyAware<span class="text-blue-600">+</span></h1>
+                <a href="index.html" class="text-2xl font-bold primary-color">HealthChecker<span class="text-blue-600"></span></a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="font-medium hover:primary-color transition-all">Home</a>
+                <a href="index.html#conditions" class="font-medium hover:primary-color transition-all">Conditions</a>
+                <a href="index.html#symptom-checker" class="font-medium hover:primary-color transition-all">Symptom Checker</a>
+                <a href="index.html#resources" class="font-medium hover:primary-color transition-all">Resources</a>
+                <a href="index.html#about" class="font-medium hover:primary-color transition-all">About</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600" aria-label="Toggle menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-y-0 right-0 bg-white w-3/4 max-w-xs shadow-lg md:hidden z-50">
+            <div class="flex justify-end p-4">
+                <button id="close-menu-btn" class="text-gray-600" aria-label="Close menu">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-4 px-6">
+                <a href="index.html" class="font-medium hover:primary-color transition-all">Home</a>
+                <a href="index.html#conditions" class="font-medium hover:primary-color transition-all">Conditions</a>
+                <a href="index.html#symptom-checker" class="font-medium hover:primary-color transition-all">Symptom Checker</a>
+                <a href="index.html#resources" class="font-medium hover:primary-color transition-all">Resources</a>
+                <a href="index.html#about" class="font-medium hover:primary-color transition-all">About</a>
             </div>
         </div>
-    </div>
+    </nav>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 max-w-4xl">
-        <div id="checker-step-1" class="bg-white rounded-lg shadow-lg p-6 mb-8 fade-in">
-            <h2 class="text-2xl font-bold mb-6">Choose a Health Condition</h2>
+        <div id="checker-step-1" class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in card-hover">
+            <h2 class="text-2xl font-bold mb-6 primary-color">Choose a Health Condition</h2>
             <select id="condition-select" class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500">
                 <option value="">Select a condition</option>
                 <option value="cancer">Cancer</option>
@@ -108,46 +150,46 @@
                 <option value="infectious">Infectious</option>
                 <option value="skin">Skin Conditions</option>
             </select>
-            <button onclick="startChecker()" class="primary-bg hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-lg transition-all w-full sm:w-auto scale-hover">
+            <button onclick="startChecker()" class="primary-bg hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-lg transition-all w-full sm:w-auto scale-hover shadow-md">
                 Start Checker <i class="fas fa-arrow-right ml-2"></i>
             </button>
             <div id="loading-spinner" class="loading-spinner mt-4"></div>
         </div>
 
-        <div id="checker-step-2" class="hidden bg-white rounded-lg shadow-lg p-6 mb-8 fade-in">
+        <div id="checker-step-2" class="hidden bg-white rounded-lg shadow-md p-6 mb-8 fade-in card-hover">
             <div class="progress-bar mb-6">
                 <div id="progress-fill" class="progress-fill"></div>
             </div>
             <div class="flex justify-between items-center mb-6">
-                <h2 id="condition-title" class="text-2xl font-bold"></h2>
+                <h2 id="condition-title" class="text-2xl font-bold primary-color"></h2>
                 <span id="question-count" class="text-gray-500"></span>
             </div>
             <div id="question-container" class="mb-8"></div>
             <div class="flex justify-between">
-                <button id="prev-btn" onclick="prevQuestion()" class="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all scale-hover hidden">
+                <button id="prev-btn" onclick="prevQuestion()" class="border-2 border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all scale-hover shadow-md hidden">
                     <i class="fas fa-arrow-left mr-2"></i> Previous
                 </button>
-                <button id="next-btn" onclick="nextQuestion()" class="primary-bg hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover">
+                <button id="next-btn" onclick="nextQuestion()" class="primary-bg hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover shadow-md">
                     Next <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
 
-        <div id="checker-results" class="hidden bg-white rounded-lg shadow-lg p-6 fade-in">
-            <h2 class="text-2xl font-bold mb-4">Your Symptom Assessment</h2>
+        <div id="checker-results" class="hidden bg-white rounded-lg shadow-md p-6 fade-in card-hover">
+            <h2 class="text-2xl font-bold mb-4 primary-color">Your Symptom Assessment</h2>
             <div id="results-content" class="mb-6"></div>
             <div class="bg-gray-100 rounded-lg p-4 mb-6">
-                <h3 class="font-bold mb-2">Recommended Next Steps</h3>
+                <h3 class="font-bold mb-2 primary-color">Recommended Next Steps</h3>
                 <div id="recommendations"></div>
             </div>
             <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button onclick="restartChecker()" class="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all scale-hover">
+                <button onclick="restartChecker()" class="border-2 border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all scale-hover shadow-md">
                     <i class="fas fa-redo mr-2"></i> Start Over
                 </button>
-                <button onclick="changeCondition()" class="secondary-bg hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover">
+                <button onclick="changeCondition()" class="secondary-bg hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover shadow-md">
                     Change Condition <i class="fas fa-sync-alt ml-2"></i>
                 </button>
-                <a href="index.html#resources" class="secondary-bg hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover">
+                <a href="index.html#resources" class="secondary-bg hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all scale-hover shadow-md">
                     View Resources <i class="fas fa-external-link-alt ml-2"></i>
                 </a>
             </div>
@@ -157,6 +199,46 @@
             <p><i class="fas fa-info-circle mr-1"></i> This tool does not provide medical diagnosis. It's designed to help you recognize potential symptoms that may warrant professional evaluation.</p>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heartbeat text-2xl text-teal-400 mr-2"></i>
+                        <span class="text-xl font-bold">HealthChecker</span>
+                    </div>
+                    <p class="text-gray-400">Empowering early health awareness by enabling users to identify potential symptoms through a simple checkbox system, promoting proactive care, timely medical attention, and informed decisions for a healthier, more conscious lifestyle.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-all">Home</a></li>
+                        <li><a href="index.html#conditions" class="text-gray-400 hover:text-white transition-all">Conditions</a></li>
+                        <li><a href="index.html#symptom-checker" class="text-gray-400 hover:text-white transition-all">Symptom Checker</a></li>
+                        <li><a href="index.html#resources" class="text-gray-400 hover:text-white transition-all">Resources</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-all">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> support@healthchecker.com</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> (800) 555-HEALTH</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 HealthChecker. All rights reserved. Powered by <a href="https://devauradigital.com" class="text-teal-400 hover:text-white transition-all">Devaura Digital</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top primary-bg text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
         const symptomData = {
@@ -240,6 +322,48 @@
                 });
             }, { threshold: 0.2 });
             fadeElements.forEach(el => observer.observe(el));
+
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Smooth Scroll for Navigation Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         };
 
         function startChecker() {
@@ -271,7 +395,7 @@
                 <p class="text-lg mb-4">${question.question}</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     ${question.options.map(option => `
-                        <button onclick="selectAnswer('${option}', this)" class="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-teal-50 hover:border-teal-500 transition-all scale-hover ${answers[currentQuestionIndex] === option ? 'answer-selected' : ''}">${option}</button>
+                        <button onclick="selectAnswer('${option}', this)" class="border-2 border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-teal-50 hover:border-teal-500 transition-all scale-hover shadow-md ${answers[currentQuestionIndex] === option ? 'answer-selected' : ''}">${option}</button>
                     `).join('')}
                 </div>
             `;
