@@ -96,7 +96,6 @@
                 <a href="#" class="font-medium hover:primary-color transition-all">Home</a>
                 <a href="#conditions" class="font-medium hover:primary-color transition-all">Conditions</a>
                 <a href="#symptom-checker" class="font-medium hover:primary-color transition-all">Symptom Checker</a>
-                <a href="#resources" class="font-medium hover:primary-color transition-all">Resources</a>
                 <a href="#about" class="font-medium hover:primary-color transition-all">About</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden text-gray-600" aria-label="Toggle menu">
@@ -114,7 +113,6 @@
                 <a href="#" class="font-medium hover:primary-color transition-all">Home</a>
                 <a href="#conditions" class="font-medium hover:primary-color transition-all">Conditions</a>
                 <a href="#symptom-checker" class="font-medium hover:primary-color transition-all">Symptom Checker</a>
-                <a href="#resources" class="font-medium hover:primary-color transition-all">Resources</a>
                 <a href="#about" class="font-medium hover:primary-color transition-all">About</a>
             </div>
         </div>
@@ -216,7 +214,7 @@
                     <div class="h-3 bg-yellow-500"></div>
                     <div class="p-6">
                         <div class="text-yellow-500 text-3xl mb-4">
-                            <i class="fas fa-liver"></i>
+                            <i class="fas fa-stethoscope"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2">Liver</h3>
                         <p class="text-gray-600 mb-4">Hepatitis, fatty liver disease, and other liver conditions.</p>
@@ -353,45 +351,6 @@
         </div>
     </section>
 
-    <!-- Resources -->
-    <section id="resources" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Health Resources</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                <div class="bg-white rounded-lg p-6 card-hover transition-all shadow-md fade-in">
-                    <div class="primary-color text-3xl mb-4">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Screening Guidelines</h3>
-                    <p class="text-gray-600 mb-4">Recommended health screenings by age and risk factors.</p>
-                    <a href="#" class="text-teal-600 font-medium hover:text-teal-800 transition-all flex items-center scale-hover">
-                        View guidelines <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-                <div class="bg-white rounded-lg p-6 card-hover transition-all shadow-md fade-in">
-                    <div class="primary-color text-3xl mb-4">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Helplines</h3>
-                    <p class="text-gray-600 mb-4">Immediate support for health concerns and mental health.</p>
-                    <a href="#" class="text-teal-600 font-medium hover:text-teal-800 transition-all flex items-center scale-hover">
-                        Contact information <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-                <div class="bg-white rounded-lg p-6 card-hover transition-all shadow-md fade-in">
-                    <div class="primary-color text-3xl mb-4">
-                        <i class="fas fa-book-medical"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Educational Materials</h3>
-                    <p class="text-gray-600 mb-4">Trusted sources for understanding health conditions.</p>
-                    <a href="#" class="text-teal-600 font-medium hover:text-teal-800 transition-all flex items-center scale-hover">
-                        Browse resources <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -401,9 +360,7 @@
                         <i class="fas fa-heartbeat text-2xl text-teal-400 mr-2"></i>
                         <span class="text-xl font-bold">HealthChecker</span>
                     </div>
-                    <p class="text-gray-400">Empowering early health awareness by enabling users to identify potential 
-                        symptoms through a simple checkbox system, promoting proactive care, timely medical attention, and 
-                        informed decisions for a healthier, more conscious lifestyle.</p>
+                    <p class="text-gray-400">Empowering early health awareness by enabling users to identify potential symptoms through a simple checkbox system, promoting proactive care, timely medical attention, and informed decisions for a healthier, more conscious lifestyle.</p>
                 </div>
                 <div>
                     <h4 class="text-lg font-bold mb-4">Navigation</h4>
@@ -411,7 +368,6 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition-all">Home</a></li>
                         <li><a href="#conditions" class="text-gray-400 hover:text-white transition-all">Conditions</a></li>
                         <li><a href="#symptom-checker" class="text-gray-400 hover:text-white transition-all">Symptom Checker</a></li>
-                        <li><a href="#resources" class="text-gray-400 hover:text-white transition-all">Resources</a></li>
                         <li><a href="#about" class="text-gray-400 hover:text-white transition-all">About</a></li>
                     </ul>
                 </div>
@@ -457,7 +413,7 @@
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80, // Adjust for fixed navbar height
+                        top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }
